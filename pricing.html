@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prezzi | Volgio Monitor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="page-hero">
+      <nav class="nav">
+        <a class="logo" href="index.html">Volgio<span>Monitor</span></a>
+        <div class="nav-links">
+          <a href="features.html">Funzioni</a>
+          <a href="pricing.html" class="active">Prezzi</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="contact.html">Contatti</a>
+          <a class="btn btn-ghost" href="login.html">Accedi</a>
+        </div>
+      </nav>
+      <div class="page-hero-content">
+        <h1>Prezzi trasparenti per ogni team.</h1>
+        <p>Scegli un piano settimanale, mensile o annuale, senza vincoli.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="pricing">
+          <div class="price-card">
+            <h3>Starter</h3>
+            <p class="price">€12<span>/mese</span></p>
+            <ul>
+              <li>20 pagine monitorate</li>
+              <li>Notifiche email</li>
+              <li>Frequenza 4 ore</li>
+              <li>Supporto base</li>
+            </ul>
+            <button class="btn btn-secondary">Inizia</button>
+          </div>
+          <div class="price-card highlight">
+            <div class="badge">Popolare</div>
+            <h3>Pro</h3>
+            <p class="price">€29<span>/mese</span></p>
+            <ul>
+              <li>120 pagine monitorate</li>
+              <li>Slack + Telegram</li>
+              <li>Frequenza 30 minuti</li>
+              <li>Team fino a 5 persone</li>
+            </ul>
+            <button class="btn btn-primary">Scegli Pro</button>
+          </div>
+          <div class="price-card">
+            <h3>Business</h3>
+            <p class="price">Personalizzato</p>
+            <ul>
+              <li>Monitoraggi illimitati</li>
+              <li>SLA dedicato</li>
+              <li>API e webhook</li>
+              <li>Account manager</li>
+            </ul>
+            <button class="btn btn-secondary">Parliamone</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-title">
+          <h2>Pagamenti PayPal</h2>
+          <p>Attiva il piano Pro con pagamento PayPal settimanale, mensile o annuale.</p>
+        </div>
+        <div class="comparison">
+          <div class="comparison-row">
+            <span>Pro settimanale</span>
+            <strong>€12 / settimana</strong>
+            <button class="btn btn-secondary paypal-button" data-interval="weekly">
+              Paga con PayPal
+            </button>
+          </div>
+          <div class="comparison-row">
+            <span>Pro mensile</span>
+            <strong>€29 / mese</strong>
+            <button class="btn btn-secondary paypal-button" data-interval="monthly">
+              Paga con PayPal
+            </button>
+          </div>
+          <div class="comparison-row">
+            <span>Pro annuale</span>
+            <strong>€290 / anno</strong>
+            <button class="btn btn-secondary paypal-button" data-interval="annual">
+              Paga con PayPal
+            </button>
+          </div>
+          <p class="form-message" id="paypal-message" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-title">
+          <h2>Confronto rapido</h2>
+          <p>Tutte le funzionalità principali incluse, differenze chiare.</p>
+        </div>
+        <div class="comparison">
+          <div class="comparison-row">
+            <span>Pagine monitorate</span>
+            <strong>20 / 120 / Illimitate</strong>
+          </div>
+          <div class="comparison-row">
+            <span>Frequenza minima</span>
+            <strong>4h / 30m / 5m</strong>
+          </div>
+          <div class="comparison-row">
+            <span>Integrazioni</span>
+            <strong>Email / Email + Chat / Tutte</strong>
+          </div>
+          <div class="comparison-row">
+            <span>Supporto</span>
+            <strong>Base / Prioritario / Dedicato</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="cta-banner">
+          <div>
+            <h2>Hai bisogno di un piano personalizzato?</h2>
+            <p>Il nostro team è pronto a creare un'offerta su misura.</p>
+          </div>
+          <a class="btn btn-primary" href="contact.html">Parla con noi</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <h3>Volgio Monitor</h3>
+        <p>Il modo più semplice per monitorare qualsiasi pagina web.</p>
+      </div>
+      <div class="footer-links">
+        <a href="features.html">Funzioni</a>
+        <a href="pricing.html">Prezzi</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="contact.html">Contatti</a>
+        <a href="about.html">Chi siamo</a>
+        <a href="support.html">Supporto</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Termini</a>
+      </div>
+    </footer>
+
+    <script>
+      const paypalButtons = document.querySelectorAll(".paypal-button");
+      const paypalMessage = document.getElementById("paypal-message");
+
+      paypalButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          paypalMessage.textContent = "";
+          paypalMessage.classList.remove("is-error", "is-success");
+
+          const token = localStorage.getItem("volgio_token");
+          if (!token) {
+            paypalMessage.textContent =
+              "Accedi o registrati prima di procedere al pagamento.";
+            paypalMessage.classList.add("is-error");
+            return;
+          }
+
+          const interval = button.dataset.interval;
+          try {
+            const response = await fetch("http://localhost:8000/payments/paypal/create", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ interval }),
+            });
+
+            if (!response.ok) {
+              const payload = await response.json();
+              paypalMessage.textContent = payload.detail || "Errore PayPal.";
+              paypalMessage.classList.add("is-error");
+              return;
+            }
+
+            const payload = await response.json();
+            window.location.href = payload.approval_url;
+          } catch (error) {
+            paypalMessage.textContent =
+              "Errore di rete: verifica che l'API sia attiva.";
+            paypalMessage.classList.add("is-error");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
