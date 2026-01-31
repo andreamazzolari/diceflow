@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crea account | Volgio Monitor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="page-hero">
+      <nav class="nav">
+        <a class="logo" href="index.html">Volgio<span>Monitor</span></a>
+        <div class="nav-links">
+          <a href="features.html">Funzioni</a>
+          <a href="pricing.html">Prezzi</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="contact.html">Contatti</a>
+          <a class="btn btn-ghost" href="login.html">Accedi</a>
+        </div>
+      </nav>
+      <div class="page-hero-content">
+        <h1>Crea il tuo account</h1>
+        <p>Inizia a monitorare le pagine in pochi minuti con la prova gratuita.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="auth">
+          <div class="auth-card">
+            <h2>Registrati gratis</h2>
+            <form id="register-form">
+              <label>
+                Email
+                <input type="email" name="email" placeholder="nome@azienda.it" required />
+              </label>
+              <label>
+                Password
+                <input
+                  type="password"
+                  name="password"
+                  minlength="8"
+                  placeholder="Almeno 8 caratteri"
+                  required
+                />
+              </label>
+              <label>
+                Conferma password
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  minlength="8"
+                  placeholder="Ripeti la password"
+                  required
+                />
+              </label>
+              <button class="btn btn-primary" type="submit">Crea account</button>
+              <p class="form-message" id="register-message" role="status" aria-live="polite"></p>
+            </form>
+            <div class="auth-footer">
+              <span>Hai già un account? <a href="login.html">Accedi</a></span>
+              <span>Preferisci un demo? <a href="dashboard.html">Guarda la dashboard</a></span>
+            </div>
+          </div>
+          <div class="auth-highlight">
+            <h3>Cosa ottieni subito</h3>
+            <p>Monitoraggi attivi, alert email e storico delle modifiche in un unico posto.</p>
+            <ul>
+              <li>Monitoraggi illimitati nella prova</li>
+              <li>Alert via email e dashboard</li>
+              <li>Passaggio a piano Pro in un click</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <h3>Volgio Monitor</h3>
+        <p>Il modo più semplice per monitorare qualsiasi pagina web.</p>
+      </div>
+      <div class="footer-links">
+        <a href="features.html">Funzioni</a>
+        <a href="pricing.html">Prezzi</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="contact.html">Contatti</a>
+        <a href="about.html">Chi siamo</a>
+        <a href="support.html">Supporto</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Termini</a>
+      </div>
+    </footer>
+
+    <script>
+      const form = document.getElementById("register-form");
+      const message = document.getElementById("register-message");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        message.textContent = "";
+        message.classList.remove("is-error", "is-success");
+
+        const email = form.email.value.trim();
+        const password = form.password.value;
+        const confirmPassword = form.confirmPassword.value;
+
+        if (password !== confirmPassword) {
+          message.textContent = "Le password non coincidono.";
+          message.classList.add("is-error");
+          return;
+        }
+
+        try {
+          const response = await fetch("http://localhost:8000/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          if (!response.ok) {
+            const payload = await response.json();
+            message.textContent = payload.detail || "Registrazione non riuscita.";
+            message.classList.add("is-error");
+            return;
+          }
+
+          const payload = await response.json();
+          localStorage.setItem("volgio_token", payload.access_token);
+          message.textContent = "Account creato! Ora puoi iniziare i monitoraggi.";
+          message.classList.add("is-success");
+          form.reset();
+        } catch (error) {
+          message.textContent = "Errore di rete: verifica che l'API sia attiva.";
+          message.classList.add("is-error");
+        }
+      });
+    </script>
+  </body>
+</html>
